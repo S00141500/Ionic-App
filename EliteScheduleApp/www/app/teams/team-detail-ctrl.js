@@ -2,13 +2,66 @@
 
 	'use strict';
 
-	angular.module('eliteApp').controller('teamDetailCtrl',['$stateParams',teamDetailCtrl]);
+	angular.module('eliteApp').controller('teamDetailCtrl',['$stateParams','eliteApi', teamDetailCtrl]);
 
-	function teamDetailCtrl($stateParams){
+	function teamDetailCtrl($stateParams, eliteApi){
 
-		var vm = this;
+		  var vm = this;
+        
+        //console.log("$stateParams", $stateParams);
+        vm.teamId = Number($stateParams.id);
+        
+        var data = eliteApi.getLeagueData();
+        
+        
+        
+        var team = _.chain(data.teams)
+                    .flatten("divisionTeams")
+                    .find({ "id": vm.teamId })
+                    .value();
+		
+		console.log(team.name);
 
-		console.log("$stateParams",$stateParams);
+
+		vm.teamName = team.name;
+
+		vm.games = _.chain(data.teams)
+		.filter(isTeamInGame)
+		.map(function(item){
+			var isTeam = (item.teamId === vm.teamId ? true:false );
+			var opponentName = isTeam1 ? item.team2: item.team1;
+			var scoreDisplay = getScoreDisplay(isTeam1,item.team1Score, item.team2Score);
+			return{
+				gameId: item.Id,
+				opponent:opponentName,
+				time : item.time,
+				location: item.location,
+				locationUrl: item.locationUrl,
+				scoreDisplay: scoreDisplay,
+				homeAway : (isTeam1? "vs." : "at.")
+			};
+
+		}).value();
+
+
+
+		function isTeamInGame(item){
+
+			return item.team1Id === vm.teamId || item.team2Id === vm.teamId;
+		}
+
+		function getScoreDisplay(isTeam1,team1Score,team2Score){
+			if(team1Score && team2Score){
+				var teamScore = (isTeam1? team1Score : team2Score);
+				var opponentScore = (isTeam1? teame2Score : team1Score);
+				var winIndicator = teamScore > opponentScore ? "W: " : "L: ";
+				return winIndicator + teamScore + "-" + opponentScore;
+			}
+			else{
+				return "";
+			}
+		}
+
 	};
 
 })();
