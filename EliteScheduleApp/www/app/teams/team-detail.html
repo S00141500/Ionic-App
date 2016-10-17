@@ -3,7 +3,21 @@
 		<div class="list">
 			<a class="item item-icon-right" ng-repeat="game in vm.games"
 			 ui-serf="app.game({id:game.gameId})">
-			 	{{game.opponent}} {{game.scoreDisplay}}
+
+			 	<div class="row">
+			 		<div class="col-20 col-center">
+			 			<p>{{game.time | date:'d/M/yy'}}</p>
+			 			<p>{{game.time | date:'shortTime'}}</p>
+			 		</div>
+			 		<div class="col">
+			 			<h3>{{game.homeAway}}  {{game.opponent}}</p>
+			 			<p>{{game.location}}</p>
+			 		</div>
+			 		<div class="col-20 col-center">
+			 			<h4 class="positive">{{game.scoreDisplay}}</h4>
+			 		</div>
+			 	</div>
+			 	
 			 	<i class="icon ion-chevron-right icon-accessory"></i>
 			 </a>
 		</div>
