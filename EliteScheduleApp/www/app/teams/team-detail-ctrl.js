@@ -48,7 +48,12 @@
          				.find({"teamId" : vm.teamId})
          				.value();
 
-		console.log(vm.game);
+        vm.following = false;
+
+        vm.toggleFollow = function(){
+
+            vm.following = !vm.following;
+        }
 
 		function isTeamInGame(item){
             return item.team1Id === vm.teamId || item.team2Id === vm.teamId;
