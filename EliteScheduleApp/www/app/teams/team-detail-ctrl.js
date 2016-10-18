@@ -23,7 +23,7 @@
 		console.log(team.name);
 
 
-		vm.teamName = team.name;
+		//vm.teamName = team.name;
 
 		vm.games = _.chain(data.games)
                         .filter(isTeamInGame)
@@ -42,6 +42,11 @@
                             };
                         })
                         .value();
+
+         vm.standings = _.chain(data.standings)
+         				.flatten("divisionStandings")
+         				.find({"teamId" : vm.teamId})
+         				.value();
 
 		console.log(vm.game);
 
