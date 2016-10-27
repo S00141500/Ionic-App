@@ -11,10 +11,9 @@
         //console.log("$stateParams", $stateParams);
         vm.teamId = Number($stateParams.id);
         
-        var data = eliteApi.getLeagueData();
-        
-        
-        
+        var data = eliteApi.getLeagueData().then(function(data){
+
+
         var team = _.chain(data.teams)
                     .flatten("divisionTeams")
                     .find({ "id": vm.teamId })
@@ -84,6 +83,9 @@
             }
         }
 
+
+        });
+        
 	};
 
 })();

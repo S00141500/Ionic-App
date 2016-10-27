@@ -8,8 +8,10 @@
 
 		var vm = this;
 
-		var data = eliteApi.getLeagueData();
+		var data = eliteApi.getLeagueData().then(function(data){
 		vm.standings = data.standings;
+ 			
+		});
 	}
 
 })();

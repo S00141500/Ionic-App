@@ -1,6 +1,6 @@
-angular.module("eliteApp",["ionic"])
+angular.module("eliteApp",["ionic", "angular-data.DSCacheFactory"])
 
-.run(function($ionicPlatform){
+.run(function($ionicPlatform, DSCacheFactory){
 
 	$ionicPlatform.ready(function(){
 
@@ -13,6 +13,11 @@ angular.module("eliteApp",["ionic"])
 
 			StatusBar.styleDefault();
 		}
+
+		DSCacheFactory("leagueDataCache", {storageMode:"localStorage", maxAge :10000, delteOnExpire: "aggressive"});
+		DSCacheFactory("leaguesCache", {storageMode:"localStorage", maxAge :10000, delteOnExpire: "aggressive"});
+		DSCacheFactory("myTeamsCache", {storageMode:"localStorage"});
+		DSCacheFactory("staticCache", {storageMode:"localStorage"});
 	});
 })
 
@@ -93,6 +98,6 @@ angular.module("eliteApp",["ionic"])
 		}
 	});
 
-	$urlRouterProvider.otherwise("/app/teams");
+	$urlRouterProvider.otherwise("/home/leagues");
 
 	})

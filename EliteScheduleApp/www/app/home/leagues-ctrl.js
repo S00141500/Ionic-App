@@ -8,11 +8,12 @@
 
 		var vm = this;
 
-		var leagues = eliteApi.getLeagues();
-		vm.leagues = leagues;
+		eliteApi.getLeagues().then(function(data){
+			vm.leagues = data;
+		});
 
-		vm.selectLeague = function(leagueId){
-
+		vm.selectLeague = function(id){
+			eliteApi.setLeagueId(id);
 			$state.go("app.teams");
 		}
 

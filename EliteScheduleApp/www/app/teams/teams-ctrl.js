@@ -8,8 +8,9 @@
 
 		var vm = this;
 
-		var data = eliteApi.getLeagueData();
-		vm.teams = data.teams;
+		eliteApi.getLeagueData().then(function(data){
+			vm.teams = data.teams;
+		});
 	}
 
 })();
