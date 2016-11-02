@@ -79,11 +79,16 @@
 			return deferred.promise;
 		}
 
-		function getLeagueData(){
+		function getLeagueData(forceRefresh){
+			if(typeof forceRefresh == "undefined" )
+				forceRefresh = false;
 
 			var deferred = $q.defer();
 			var cacheKey = "leaguesData" + getLeagueId();
-			var leagueData = self.leagueDataCache.get(cacheKey);
+			var leagueData = null;
+
+			if(!forceRefresh)
+				leagueData = self.leagueDataCache.get(cacheKey);
 
 			// check if data is in cache and if not use Http call.
 			if(leagueData){
